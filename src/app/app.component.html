@@ -1,0 +1,125 @@
+<mat-toolbar color="primary" class="menuList">
+  <span>ZenduForms</span>
+	<mat-nav-list class="list-horizontal">
+
+     <mat-list-item>
+      <button mat-menu-item>
+        <span class="material-icons">format_list_bulleted</span>
+        <span>Forms</span>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-menu-item>
+        <mat-icon>group</mat-icon>
+        <span>Customers</span>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-menu-item>
+        <span class='material-icons'>graphic_eq</span>
+        <span>Submissions</span>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-menu-item>
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-menu-item>
+        <span class='material-icons'>insert_chart_outlined</span>
+        <span>Reports</span>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-menu-item>
+        <span class='material-icons'>insert_chart_outlined</span>
+        <span>Workflow</span>
+      </button>
+    </mat-list-item>
+  </mat-nav-list>
+
+  <span class="logout">
+    <span>
+      <mat-icon class="centerAlign">notifications_none</mat-icon>
+    </span>
+    <span>
+      <mat-icon class="centerAlign">logout</mat-icon>
+    </span>
+     
+  </span>
+</mat-toolbar>
+<mat-card style="height:100%">
+  <mat-card-content >
+   <span style="font-weight: bold; font-size: 2rem;">Submissions</span>
+   <div style="display: flex;justify-content: space-between;">
+      <mat-form-field appearance="outline">
+        <mat-label>Search...</mat-label>
+        <input matInput placeholder="Search...">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Select Form</mat-label>
+        <mat-select>
+          <mat-option>Select Form </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Select Status</mat-label>
+        <mat-select>
+          <mat-option>Select Status </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matPrefix [for]="picker">search</mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-button-toggle-group style="height: fit-content;" name="fontStyle"
+       aria-label="Font Style" [value]="selectedVal">
+        <mat-button-toggle value="map">Map</mat-button-toggle>
+        <mat-button-toggle value="list">List</mat-button-toggle>
+      </mat-button-toggle-group>
+      <button style="background-color: transparent;padding-bottom: 10px;color:#306CEE;font-weight: 900;" mat-icon-button aria-label="Example icon button with a open in new tab icon">
+        <img src="assets/file-arrow-down-solid.svg" width="20px"/>Export        
+      </button>
+   </div>
+   <div style="display: flex;flex-direction: row">
+    <div>
+      <mat-card *ngFor="let item of workFlows">
+        <mat-card-header style="display: block;">
+          <mat-card-title-group>
+            <mat-card-title>Workflow: Required Location</mat-card-title>
+            <ul [ngClass]="{'uncomplete': item.status == 'Uncomplete', 'complete': item.status == 'Complete' , 'review':item.status == 'Needs Review'}">
+              <li><span style="vertical-align: super;padding-right: 5px;">
+                {{item.status}}</span></li>
+            </ul>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+        <div><span class="grayColor">From:&nbsp;</span>{{item.from}}
+        </div>
+        <div><span  class="grayColor">To:&nbsp;</span><span></span>
+          {{item.to}}</div>
+        <div><span  class="grayColor">Due Date:&nbsp;</span>
+          <span style="color: #FF3D1E;">
+          {{item.dueDate}}
+        </span></div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <agm-map [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+   </div>
+  </mat-card-content>
+</mat-card>
